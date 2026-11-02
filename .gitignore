@@ -1,0 +1,12 @@
+*.exe
+*.o
+*.obj
+*.out
+*.log
+/stock_predictor
+/stock_website
+/test_stock
+.vscode/
+.idea/
+.DS_Store
+__pycache__/

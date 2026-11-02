@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1020">
+  <meta name="description" content="StockLab is a local-first C++ stock price forecasting project powered by a simple moving average model.">
+  <title>StockLab — C++ Stock Price Prediction</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <div class="backdrop" aria-hidden="true"></div>
+  <div class="shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="StockLab home"><span class="brand-symbol">▥</span><span>Stock<span class="brand-accent">Lab</span></span><span class="brand-mini">/ OOP C++</span></a>
+      <div class="top-right"><span class="local-dot"></span> Runs locally on your computer <span class="version">v1.0</span></div>
+    </header>
+    <main>
+      <section class="intro">
+        <div class="eyebrow"><span class="small-line"></span> MARKET ANALYTICS STUDIO <span class="eyebrow-tag">C++ ENGINE</span></div>
+        <h1>Understand the past.<br><span class="gradient-text">Explore what comes next.</span></h1>
+        <p>Import historical closing prices, visualize moving averages, and experiment with a simple C++ forecasting model — all on your own device.</p>
+      </section>
+      <div class="workspace">
+        <aside class="sidebar">
+          <section class="panel data-panel" aria-labelledby="data-heading">
+            <div class="panel-heading"><div><span class="section-kicker">01 / DATA SOURCE</span><h2 id="data-heading">Load your data</h2></div><span class="panel-heading-icon">↥</span></div>
+            <div class="drop-zone" id="dropZone" tabindex="0" role="button" aria-label="Choose a stock CSV file or drag one here">
+              <div class="upload-circle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 16V3m0 0L7.5 7.5M12 3l4.5 4.5M4 16v4h16v-4"/></svg></div>
+              <strong>Drop your CSV file</strong><span>or click to browse</span><small>Date + Close columns required</small>
+            </div>
+            <input id="fileInput" type="file" accept=".csv,text/csv" hidden>
+            <div class="chosen-file" id="chosenFile"><span class="file-badge">CSV</span><span id="fileName">No file selected</span><span id="fileStatus">—</span></div>
+            <button type="button" class="demo-btn" id="sampleBtn"><span>✦</span> Use example dataset <span aria-hidden="true">↗</span></button>
+          </section>
+          <section class="panel settings-panel" aria-labelledby="model-heading">
+            <div class="panel-heading"><div><span class="section-kicker">02 / MODEL SETTINGS</span><h2 id="model-heading">Configure analysis</h2></div><span class="panel-heading-icon">⚙</span></div>
+            <label for="windowInput">Moving-average window <span id="windowValue">7 observations</span></label>
+            <input id="windowInput" type="range" min="2" max="30" value="7" step="1">
+            <div class="range-meta"><span>2</span><span>30</span></div>
+            <label for="horizonInput">Forecast horizon <span id="horizonValue">5 steps</span></label>
+            <input id="horizonInput" type="range" min="1" max="15" value="5" step="1">
+            <div class="range-meta"><span>1</span><span>15</span></div>
+            <button type="button" class="primary-btn" id="analyzeBtn">Run C++ analysis <span aria-hidden="true">→</span></button>
+            <p class="engine-note"><span>◈</span> Prices are calculated by your local C++ server. No stock API or cloud upload is used.</p>
+            <div class="error-box" id="errorBox" role="alert" hidden></div>
+          </section>
+          <div class="side-tip"><div class="side-tip-icon">i</div><div><strong>How does it work?</strong><p>The model measures the change in consecutive moving averages, then extends that trend from the latest known close.</p></div></div>
+        </aside>
+        <div class="main-area">
+          <section class="summary-top"><div><div class="section-kicker">03 / ANALYSIS RESULTS</div><h2>Market overview</h2></div><div class="date-chip" id="asOfDate">Ready to analyze</div></section>
+          <section class="metrics" aria-label="Analysis metrics">
+            <article class="metric-card"><span class="metric-top">Latest close <span>◷</span></span><strong id="latestClose">—</strong><small id="historyCount">Historical dataset</small></article>
+            <article class="metric-card"><span class="metric-top">Moving average <span>〰</span></span><strong id="latestSma">—</strong><small id="smaDetail">7-observation SMA</small></article>
+            <article class="metric-card"><span class="metric-top">Trend direction <span>↗</span></span><strong id="trend" class="metric-trend">—</strong><small id="slopeDetail">Change in SMA</small></article>
+            <article class="metric-card"><span class="metric-top">Last price change <span>↕</span></span><strong id="dailyChange">—</strong><small>Versus previous observation</small></article>
+          </section>
+          <section class="panel chart-panel">
+            <div class="chart-top"><div><span class="section-kicker">PRICE VISUALIZATION</span><h2>Historical trend & forecast</h2></div><span class="chart-caption">Illustrative projection</span></div>
+            <div class="chart-legend"><span><i class="legend-dot close"></i>Closing price</span><span><i class="legend-dot sma"></i>Moving average</span><span><i class="legend-dot forecast"></i>Forecast</span></div>
+            <div class="chart-canvas-wrap" id="chartWrap"><canvas id="priceChart" role="img" aria-label="Historical close prices, moving average, and forecast line"></canvas><div id="chartTooltip" class="chart-tooltip" hidden></div></div>
+            <div class="chart-bottom"><span>← Historical observations</span><span>Projected steps →</span></div>
+          </section>
+          <div class="lower-grid">
+            <section class="panel forecast-panel"><div class="table-title"><div><span class="section-kicker">MODEL OUTPUT</span><h2>Forecast values</h2></div><button type="button" id="downloadBtn" class="outline-btn" disabled>↓ Export CSV</button></div><div class="table-scroll"><table><thead><tr><th>STEP</th><th>ESTIMATED CLOSE</th><th>VS LATEST</th></tr></thead><tbody id="forecastTable"><tr><td colspan="3" class="empty-row">No analysis yet</td></tr></tbody></table></div></section>
+            <section class="panel history-panel"><div class="table-title"><div><span class="section-kicker">INPUT DATA</span><h2>Recent observations</h2></div><span class="subtle-label">LAST 6 ROWS</span></div><div class="table-scroll"><table><thead><tr><th>DATE</th><th>CLOSE</th><th>SMA</th></tr></thead><tbody id="historyTable"><tr><td colspan="3" class="empty-row">No data loaded</td></tr></tbody></table></div></section>
+          </div>
+        </div>
+      </div>
+      <section class="methodology"><div class="methodology-symbol">≋</div><div><h3>Understand the math behind the predictions</h3><p>Simple moving average (SMA) = average of the last N closing prices. Forecast at step <em>h</em> = latest close + <em>h</em> × (latest SMA − previous SMA). Future steps are <strong>observations, not actual trading dates</strong>. The model does not account for volatility, news, earnings, or external factors.</p></div></section>
+    </main>
+    <footer><span>© StockLab · OOP with C++ educational project</span><span>SIMULATED EXAMPLE DATA · NOT FINANCIAL ADVICE</span></footer>
+  </div>
+</body>
+</html>

@@ -1,0 +1,22 @@
+
+=============================================
+ STOCK PRICE PREDICTION - C++ OOP PROJECT
+=============================================
+Model              : Simple Moving Average + Trend
+Observations       : 90
+Latest date        : 2026-09-11
+Latest close       : 145.07
+SMA (7 observations)     : 148.13
+One-step SMA slope : -0.76
+Recent trend       : Downward
+Last-close change  : -0.52%
+
+Illustrative forecast (future observations, NOT calendar dates):
+  Step +1 : 144.31
+  Step +2 : 143.55
+  Step +3 : 142.79
+  Step +4 : 142.02
+  Step +5 : 141.26
+
+Method: future Close = last Close + step * (latest SMA - previous SMA)
+WARNING: Educational heuristic, not a reliable market forecast.
